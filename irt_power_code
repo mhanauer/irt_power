@@ -1,0 +1,37 @@
+---
+title: "Test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Try the mirt model simulation
+```{r}
+a <- matrix(rlnorm(10,.2,.3))
+a
+diffs <- t(apply(matrix(runif(40*4, .1, 2), 40), 1, cumsum))
+diffs <- -(diffs - rowMeans(diffs))
+d <- diffs + rnorm(40)
+d
+dat <- simdata(a, d, 200, itemtype = 'graded')
+dat
+mod <- mirt(dat, 1)
+coef(mod, IRTpars=TRUE, simplify = TRUE)
+
+m2_mod<-M2(mod, type='C2')
+m2_mod
+```
+Compare A is right, but the difference model is not quite
+```{r}
+a
+d
+```
+
+
+
+
+
+
+
+
